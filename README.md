@@ -1,6 +1,6 @@
 # GameProject
 
-<h2>Piattaforma online di gaming progetto OOP 2016/17</h2>
+<h2>Piattaforma Java di gaming progetto OOP 2016/17</h2>
 <hr>
 <h3>Membri Team</h3>
 <ul>
