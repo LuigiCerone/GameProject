@@ -1,4 +1,24 @@
 # GameProject
 
-Alessandro Taglieri 243488
-Danilo Rosati 243748
+<p align="center">
+<h2>Piattaforma online di gaming</h2>
+<h3>progetto OOP 2016/17</h3>
+</p>
+<hr>
+<h3>Membri Team</h3>
+<ul>
+<li>Taglieri Alessandro 243488 
+<li>Rosati Danilo 243748
+<li>Cerone Luigi 242895
+<li>Gemini Giovanni 241972
+</ul>
+
+<h3>Struttura Repository</h3>
+
+<b>GamingPlatformProject_OOP</b> : root del progetto <br>
+
+<b>src</b> : questa directory conterrà il codice sorgente del progetto <br>
+<b>doc</b> : questa directory conterrà i documenti di design del progetto (in format pdf) <br>
+<b>javadoc</b> : questa directory conterrà il codice javadoc del progetto <br>
+
+<h3>Contatti</h3>
