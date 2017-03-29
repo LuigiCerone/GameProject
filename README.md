@@ -14,8 +14,8 @@
 
 <b>GamingPlatformProject_OOP</b> : root del progetto <br>
 
-<b>src</b> : questa directory conterrà il codice sorgente del progetto <br>
-<b>doc</b> : questa directory conterrà i documenti di design del progetto (in format pdf) <br>
-<b>javadoc</b> : questa directory conterrà il codice javadoc del progetto <br>
+<b>src</b> : directory che conterrà il codice sorgente del progetto <br>
+<b>doc</b> : directory che conterrà i documenti di design del progetto <br>
+<b>javadoc</b> : directory che conterrà il codice javadoc del progetto <br>
 
 <h3>Contatti</h3>
