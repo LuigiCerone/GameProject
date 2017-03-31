@@ -7,7 +7,6 @@
 <li>Taglieri Alessandro 243488 
 <li>Rosati Danilo 243748
 <li>Cerone Luigi 242895
-<li>Gemini Giovanni 241972
 </ul>
 
 <h3>Struttura Repository</h3>
