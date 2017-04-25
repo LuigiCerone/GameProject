@@ -3,7 +3,6 @@
 	<name>GameProject</name>
 	<comment></comment>
 	<projects>
-		<project>src</project>
 	</projects>
 	<buildSpec>
     <buildCommand>
