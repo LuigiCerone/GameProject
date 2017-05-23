@@ -108,7 +108,7 @@ public final class Dbms {
 			cmd.close();
 			if(mMod == null  && mUser == null ) return null;
 			if(mMod == null  && mUser != null) return mUser;
-			if(mMod != null  && mUser == null) return mUser;
+			if(mMod != null  && mUser == null) return mMod;
 			return null;
 		}
 

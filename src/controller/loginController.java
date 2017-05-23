@@ -25,7 +25,11 @@ public class loginController {
 			return true;
 		}
 		// l'utente è un moderatore.
-		if(mObject instanceof Moderatore){}
+		if(mObject instanceof Moderatore){
+			mObject = (Moderatore) mObject;
+			System.out.println(((Moderatore) mObject).getNome());
+			return true;
+		}
 		return false;
 		
 	}
