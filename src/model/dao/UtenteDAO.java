@@ -12,11 +12,12 @@ public class UtenteDAO implements UtenteDAO_Interface {
 	}
 
 	@Override
-	public Object tipoUtente(String user, String password) {
+	public Utente tipoUtente(String user, String password) {
 		// TODO Auto-generated method stub
-		String query = "SELECT * FROM utente "
-				+ "WHERE username='"+user+"' AND password='"+password+"';";
-		Object mObject = null;
+		String query = "SELECT * "
+				+ "FROM utente JOIN utente_gioco ON (utente.id = utente_gioco.id) "
+				+ "WHERE username='"+user+"' AND password='"+password+"' ";
+		Utente mObject = null;
 		try {
 			mObject = Dbms.queryUserType(query);
 			//if(mObject instanceof Utente) System.out.println("turned");
@@ -29,7 +30,8 @@ public class UtenteDAO implements UtenteDAO_Interface {
 
 	public boolean datiGi‡Occupati(String user, String email) {
 		// TODO Auto-generated method stub.
-		String query = "SELECT * FROM utente "
+		String query = "SELECT * "
+				+ "FROM utente JOIN utente_gioco ON (utente.id = utente_gioco.id) "
 				+ "WHERE username='"+user+"' AND email='"+email+"';";
 		boolean occupato = false;
 		try {
@@ -42,8 +44,9 @@ public class UtenteDAO implements UtenteDAO_Interface {
 		return occupato;
 	}
 
-	public Object insericiNuovoUtente(String n, String c, String u, String e, String p) {
-		String query = "INSERT INTO utente (nome, cognome, email, username, password)"
+	public Utente insericiNuovoUtente(String n, String c, String u, String e, String p) {
+		String query = 
+				"INSERT INTO utente (nome, cognome, email, username, password)"
 				+ "VALUES ('"+n+"', '"+c+"','"+e+"','"+u+"','"+p+"');";
 		int id = -1;
 		Utente user = null;
@@ -55,8 +58,43 @@ public class UtenteDAO implements UtenteDAO_Interface {
 			e1.printStackTrace();
 		}
 		finally{
-			user = new Utente(id,n,c,e,u,p);
+			user = new Utente(id,n,c,e,u,p,0);
+		}
+		
+		query = "INSERT INTO utente_gioco(id,puntixp)"
+				+ "VALUES ('"+ id + "', 0);";
+		try {
+			Dbms.inserisciProfiloGioco(query);
+		} catch (Exception e2) {
+			// TODO: handle exception
 		}
 		return user;
+	}
+	
+	public void aggiungiXPUtente(int userID, int valoreXPGioco){
+	
+		
+		String query = "UPDATE utente_gioco "
+					+ "SET utente_gioco.puntixp = utente_gioco.puntixp + '" 
+				+ valoreXPGioco + "'  WHERE utente_gioco.id = '"+ userID + "';";
+		System.out.println(query);
+		try {
+			Dbms.aggiungiXPUtente(query);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
+	public void aggiornaDatiGioco(Utente mUtente) {
+		// TODO Auto-generated method stub
+		String query = "SELECT utente_gioco.puntixp "
+				+ "FROM utente_gioco "
+				+ "WHERE id= '" + mUtente.getID() + "';";
+		//System.out.println("SELECT utente_gioco.puntixp FROM utente_gioco WHERE id= '" + mUtente.getID() + "';");
+		try {
+			Dbms.aggiornaDatiGioco(query, mUtente);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }

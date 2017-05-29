@@ -22,6 +22,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import controller.loginController;
 import view.registrazioneView;
 
 import java.util.regex.Pattern;
@@ -131,6 +132,7 @@ public class registrazionePage extends JFrame {
 							,new String(passwordFieldRepeat.getPassword()),rP,lblErrore)){
 						// Registrazione effettuata.
 						System.out.println("qui");
+						passaAProfilo(rP);
 					} else {
 						//errori.
 					}
@@ -141,4 +143,10 @@ public class registrazionePage extends JFrame {
 		getContentPane().add(btnRegistrati);
 	}
 
+	private void passaAProfilo(registrazionePage rP){
+		rP.setVisible(false);
+		rP.dispose();
+		profiloUtentePage framePaginaUtente = new profiloUtentePage(loginController.mObject);
+		framePaginaUtente.setVisible(true);
+	}
 }

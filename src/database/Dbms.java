@@ -6,7 +6,9 @@
 package database;
 
 import java.sql.*;
+import java.util.LinkedList;
 
+import model.Gioco;
 import model.Moderatore;
 import model.Utente;
 
@@ -15,8 +17,8 @@ public final class Dbms {
 
 	protected static String DRIVER = "com.mysql.jdbc.Driver";
 	protected static String URL = "jdbc:mysql://localhost/Gaming";
-	protected static String USER = "luigi";
-	protected static String PSW = "progettooop";
+	protected static String USER = "gaming";
+	protected static String PSW = "gaming";
 	
 	protected static String TIPO = "tipo";
 	
@@ -68,8 +70,7 @@ public final class Dbms {
 			con.close();
 		}
 		
-		public static Object queryUserType(String query) throws SQLException{
-			//Object mObject = null;
+		public static Utente queryUserType(String query) throws SQLException{
 			Utente  mUser = null;
 			Moderatore mMod = null;
 			
@@ -92,7 +93,9 @@ public final class Dbms {
 					mUser.setEmail(res.getString("email"));
 					mUser.setUsername(res.getString("username"));
 					mUser.setPassword(res.getString("password"));
-				}
+					mUser.setPuntiXP(res.getInt("puntixp"));
+					mUser.setLivello();
+			}
 				else if (res.getString(TIPO).equals("moderatore")){
 					mMod = new Moderatore();
 					// Popola utente.
@@ -102,6 +105,8 @@ public final class Dbms {
 					mMod.setEmail(res.getString("email"));
 					mMod.setUsername(res.getString("username"));
 					mMod.setPassword(res.getString("password"));
+					mMod.setPuntiXP(res.getInt("puntixp"));
+					mMod.setLivello();
 				}
 			}
 			res.close();
@@ -128,5 +133,61 @@ public final class Dbms {
 			res.close();
 			cmd.close();
 			return idInserito;
+		}
+
+		public static LinkedList<Gioco> getGames() throws SQLException {
+			String query = "SELECT * FROM gioco;";
+			Connection con = connectToDB();
+			// Creiamo un oggetto Statement per poter interrogare il db.
+			Statement cmd = con.createStatement ();
+			// Eseguiamo una query e immagazziniamone i risultati in un oggetto ResultSet.
+			// String qry = "SELECT * FROM utente";
+			ResultSet res = cmd.executeQuery(query);
+
+			LinkedList<Gioco> mList = new LinkedList<Gioco>();
+			
+			// Stampiamone i risultati riga per riga
+			while (res.next()) {
+				// (id, nome, xp).
+				Gioco g = new Gioco(res.getInt("id"), res.getString("nome"), res.getInt("punti"),
+						res.getFloat("votomedio"), res.getInt("numerovoti"));
+				mList.add(g);
+			}
+			closeConnectionToDB(con);
+			return mList;
+		}
+
+		public static void aggiungiXPUtente(String query) throws SQLException {
+			// TODO Auto-generated method stub
+			Connection con = connectToDB();
+			Statement cmd = con.createStatement ();
+			
+			cmd.executeUpdate(query);
+			
+			closeConnectionToDB(con);
+			
+		}
+		
+		public static void aggiornaDatiGioco(String query, Utente utente) throws SQLException{
+			Connection con = connectToDB();
+			Statement cmd = con.createStatement();
+			
+			ResultSet res = cmd.executeQuery(query);
+			
+			while(res.next()){
+				utente.setPuntiXP(res.getInt("puntixp"));
+				System.out.println(res.getInt("puntixp"));
+			}	
+			
+			closeConnectionToDB(con);
+		}
+		
+		public static void inserisciProfiloGioco(String query) throws SQLException{
+			Connection con = connectToDB();
+			Statement cmd = con.createStatement();
+			
+			cmd.executeUpdate(query);
+						
+			closeConnectionToDB(con);
 		}
 }

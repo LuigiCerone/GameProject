@@ -16,7 +16,7 @@ public class registrazioneController {
 		return new UtenteDAO().datiGi‡Occupati(u,e);
 	}
 
-	public static Object inserisciNuovoUtente(String n, String c, String u, String e, String p) {
+	public static Utente inserisciNuovoUtente(String n, String c, String u, String e, String p) {
 		Utente user = (Utente) new UtenteDAO().insericiNuovoUtente(n,c,u,e,p);
 		loginController.mObject = user;
 		return user;

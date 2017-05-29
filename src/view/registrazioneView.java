@@ -22,7 +22,8 @@ public class registrazioneView {
 			"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	
 	public boolean confermaRegistrazione(String n, String c, String u, String e, String p, String p1, registrazionePage rP, JLabel lbl){
-		  //Controllo pattern email
+		
+		//Controllo pattern email
 		TreeMap<String,Boolean> mMap = new TreeMap<String,Boolean>();
 		mMap.put("Nome",true);
 		mMap.put("Cognome", true);

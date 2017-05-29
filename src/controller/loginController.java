@@ -9,7 +9,7 @@ import model.Utente;
 import model.dao.UtenteDAO;
 
 public class loginController {
-	public static Object mObject = null;
+	public static Utente mObject = null;
 	public static boolean controllaUtente(String username, String password){
 		
 		mObject = new UtenteDAO().tipoUtente(username, password);
@@ -19,18 +19,19 @@ public class loginController {
 			return false;
 		}
 		// l'utente è un giocatore.
-		if(mObject instanceof Utente){
+		/*
+		 if(mObject instanceof Utente){
 			mObject = (Utente) mObject;
 			System.out.println(((Utente) mObject).getNome());
 			return true;
-		}
+		} */
 		// l'utente è un moderatore.
 		if(mObject instanceof Moderatore){
 			mObject = (Moderatore) mObject;
 			System.out.println(((Moderatore) mObject).getNome());
 			return true;
 		}
-		return false;
+		return true;
 		
 	}
 }

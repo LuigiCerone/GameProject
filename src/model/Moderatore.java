@@ -1,6 +1,6 @@
 package model;
 
-public class Moderatore {
+public class Moderatore extends Utente{
 	private int ID;
 	private String nome;
 	private String cognome;
@@ -11,18 +11,12 @@ public class Moderatore {
 	
 	public Moderatore() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-	
-	public Moderatore(int iD, String nome, String cognome, String email, String username, String password) {
-		super();
-		ID = iD;
-		this.nome = nome;
-		this.cognome = cognome;
-		this.email = email;
-		this.username = username;
-		this.password = password;
+	public Moderatore(int iD, String nome, String cognome, String email, String username, String password, int puntiXP) {
+		super(iD, nome, cognome, email, username, password, puntiXP);
+		// TODO Auto-generated constructor stub
 	}
-	
 	public int getID() {
 		return ID;
 	}
