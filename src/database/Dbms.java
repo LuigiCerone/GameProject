@@ -10,6 +10,7 @@ import java.util.LinkedList;
 
 import model.Gioco;
 import model.Moderatore;
+import model.Recensione;
 import model.Utente;
 
 
@@ -189,5 +190,27 @@ public final class Dbms {
 			cmd.executeUpdate(query);
 						
 			closeConnectionToDB(con);
+		}
+
+		public static LinkedList<Recensione> getRecensioni(int id) throws SQLException {
+			String query = "SELECT * "
+					+ "FROM recensione "
+					+ "WHERE approvata = 1 AND id_gioco='"+id+"';";
+			
+			Connection con = connectToDB();
+			// Creiamo un oggetto Statement per poter interrogare il db.
+			Statement cmd = con.createStatement ();
+			// Eseguiamo una query e immagazziniamone i risultati in un oggetto ResultSet.
+			// String qry = "SELECT * FROM utente";
+			ResultSet res = cmd.executeQuery(query);
+			LinkedList<Recensione> mList = new LinkedList<Recensione>();
+			// Stampiamone i risultati riga per riga
+			while (res.next()) {
+				// (id, testo, approvata).
+				Recensione r = new Recensione(res.getInt("id"), res.getString("testo"), res.getBoolean("approvata"));
+				mList.add(r);
+			}
+			closeConnectionToDB(con);
+			return mList;
 		}
 }

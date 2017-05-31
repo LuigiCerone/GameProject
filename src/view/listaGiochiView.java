@@ -1,8 +1,11 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -27,17 +30,30 @@ import gui.listaGiochiPage;
 import gui.profiloUtentePage;
 
 public class listaGiochiView {
-
-	public void creaLista(JPanel contentPane, JPanel infoGioco, JPanel recensioniGioco, JList list, 
+	private JTable table = new JTable();
+	private JScrollPane scrollPane = new JScrollPane();
+	private JLabel lblNomeGioco = new JLabel();
+	private JLabel lblInfoGioco = new JLabel();
+	private JButton buttonGioca = new JButton();
+	private JLabel lblVotoGioco = new JLabel();
+	private JButton btnNuovoVoto = new JButton();
+	private JPanel infoGioco = new JPanel();
+	private JPanel contentPane = new JPanel();
+	private JPanel nuovoVoto = new JPanel();
+	private JTable tableRecensioni = new JTable();
+	private JScrollPane scrollPaneRecensioni = new JScrollPane();
+	private JPanel recensioniPanel = new JPanel();
+	
+	/*public void creaLista(JPanel contentPane, JPanel infoGioco, JPanel recensioniGioco, JList list, 
 			JLabel lblNomeGioco, JLabel lblInfoGioco, JButton buttonGioca, JPanel nuovoVoto, JLabel lblVotoGioco, JButton btnVota) {
 		// TODO Auto-generated method stub
 		String[] names = {"Id", "Nome", "Valore", "Media voti"};
 		Object[][] mMatrix = listaGiochiController.listaGiochi();
 		
-		JTable table = new JTable(mMatrix,names);
+		table = new JTable(mMatrix,names);
 		table.setDefaultEditor(Object.class, null);
 
-		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane = new JScrollPane(table);
 		scrollPane.setColumnHeaderView(table.getTableHeader());
 		scrollPane.setPreferredSize(new Dimension(800,300));
 		
@@ -49,16 +65,15 @@ public class listaGiochiView {
 	            // print first column value from selected row
 	        	if (!event.getValueIsAdjusting())//This line prevents double events
 	            System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
-	        	
 	        	mostraGioco(table.getValueAt(table.getSelectedRow(), 0).toString(), lblNomeGioco, lblInfoGioco ,
 	        			infoGioco, recensioniGioco , buttonGioca, nuovoVoto, lblVotoGioco, btnVota);
 	        	
 	        }
 	    });
 	}
+	*/
 	
-	
-	private void mostraGioco (String id, JLabel lblNomeGioco, JLabel lblInfoGioco, JPanel infoGioco, 
+	/*private void mostraGioco (String id, JLabel lblNomeGioco, JLabel lblInfoGioco, JPanel infoGioco, 
 			JPanel recensioniGioco, JButton button, JPanel nuovoVoto, JLabel lblVotoGioco, JButton btnVota) {
 		
 		Gioco gRichiesto = listaGiochiController.informazioniGiocoDaId(id);
@@ -85,7 +100,7 @@ public class listaGiochiView {
 		
 		nuovoVoto.setVisible(true);
 		//btnVota.putClientProperty("voto", );
-	}
+	}*/
 	
 	public void aggiungiXPUtente(int userID, JButton button) {
 		// TODO Auto-generated method stub
@@ -103,5 +118,118 @@ public class listaGiochiView {
 		framePaginaUtente.setVisible(true);
 	}
 
-	
+
+	public void creaLista1(listaGiochiPage lGP, HashMap<String, Component> mMap) {
+		// TODO Auto-generated method stub
+		String[] names = {"Id", "Nome", "Valore", "Media voti"};
+		Object[][] mMatrix = listaGiochiController.listaGiochi();
+		
+		table = new JTable(mMatrix,names);
+		table.setDefaultEditor(Object.class, null);
+		table.setName("table");
+		mMap.put(table.getName(), table);
+
+		scrollPane = new JScrollPane(table);
+		scrollPane.setColumnHeaderView(table.getTableHeader());
+		scrollPane.setPreferredSize(new Dimension(800,300));
+		scrollPane.setName("scrollPane");
+		mMap.put(scrollPane.getName(), scrollPane);
+		
+		contentPane = (JPanel) mMap.get("contentPane");
+		contentPane.add(scrollPane);
+		
+		//System.out.println(mMap.toString());
+		//Finder listaGiochiFinder = new Finder(lGP);
+		
+		//System.out.println("QUIIII");
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+	        public void valueChanged(ListSelectionEvent event) {
+	            // do some actions here, for example
+	            // print first column value from selected row
+	        	if (!event.getValueIsAdjusting())//This line prevents double events
+	            System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
+	        	
+	        	mostraGioco(table.getValueAt(table.getSelectedRow(), 0).toString(), lGP, mMap);
+	        	
+	        }
+	    });
+	}
+
+	private void mostraGioco(String idGioco, listaGiochiPage lGP,  HashMap<String, Component> mMap){
+		// TODO Auto-generated method stub
+		
+		recensioniPanel = (JPanel) mMap.get("recensioniPanel");
+		recensioniPanel.removeAll();
+		
+		Gioco gRichiesto = listaGiochiController.informazioniGiocoDaId(idGioco);
+		//listaGiochiFinder.stampa();
+		//Component[] components = lGP.getComponents();
+		
+		lblNomeGioco = (JLabel) mMap.get("lblNomeGioco");
+		lblNomeGioco.setText(gRichiesto.getNome().substring(0, 1).toUpperCase() + gRichiesto.getNome().substring(1));
+		lblNomeGioco.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNomeGioco.setFont(new Font("Tahoma", Font.BOLD, 17));
+		lblNomeGioco.setVerticalAlignment(JLabel.NORTH);
+		
+		infoGioco = (JPanel) mMap.get("infoGioco");
+		infoGioco.add(lblNomeGioco, BorderLayout.NORTH);
+
+		lblInfoGioco = (JLabel) mMap.get("lblInfoGioco");
+		lblInfoGioco.setText("<html> <ul> <li> Valore XP: " + gRichiesto.getValoreXP()+"</li>"
+				+ "<li>Voto medio: " + gRichiesto.getMedia()+ "</li></ul></html>");
+		lblInfoGioco.setVerticalAlignment(JLabel.NORTH);
+		lblInfoGioco.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		infoGioco.add(lblInfoGioco);
+
+
+		// Bottone valore.
+		buttonGioca = (JButton) mMap.get("buttonGioca");
+		buttonGioca.setVisible(true);
+		buttonGioca.putClientProperty("xp", gRichiesto.getValoreXP());
+
+		lblVotoGioco = (JLabel) mMap.get("lblVotoGioco");
+		lblVotoGioco.setVerticalAlignment(JLabel.NORTH);
+		lblVotoGioco.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblVotoGioco.setText(gRichiesto.getMedia() + "");
+
+		btnNuovoVoto = (JButton) mMap.get("btnNuovoVoto");	
+		btnNuovoVoto.setVisible(true);
+		btnNuovoVoto.putClientProperty("id", gRichiesto.getId());
+		
+		// Info inserimento nuovo gioco.
+		nuovoVoto = (JPanel) mMap.get("nuovoVoto");
+		nuovoVoto.setVisible(true);
+		
+		
+		// Recensioni del gioco clickato.
+		String[] name = {"Testo"};
+		Object[][] mMatrix = listaGiochiController.listaRecensioni(gRichiesto.getId());
+		
+		tableRecensioni = new JTable(mMatrix,name);
+		tableRecensioni.setDefaultEditor(Object.class, null);
+		tableRecensioni.setName("tableRecensioni");
+		mMap.put(table.getName(), tableRecensioni);
+
+		scrollPaneRecensioni = new JScrollPane(tableRecensioni);
+		scrollPaneRecensioni.setColumnHeaderView(tableRecensioni.getTableHeader());
+		scrollPaneRecensioni.setName("scrollPaneRecensioni");
+		scrollPaneRecensioni.setPreferredSize(new Dimension(400,130));
+		mMap.put(scrollPane.getName(), scrollPaneRecensioni);
+		
+		
+		recensioniPanel.add(scrollPaneRecensioni);
+	}
+
+
+	public void aggiungiVotoGioco(Integer votoInserito, JButton btnNuovoVoto) {
+		// TODO Auto-generated method stub
+		int idGioco = (int) btnNuovoVoto.getClientProperty("id");
+		
+		int idUtente = loginController.mObject.getID();
+		
+		System.out.println("Voto "+ votoInserito + " per " + idGioco + " da " + idUtente);
+		
+		// DA AGGIUNGERE INSERITO DB.
+	}
+
 }

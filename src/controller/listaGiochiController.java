@@ -3,15 +3,18 @@ package controller;
 import model.dao.GiocoDAO;
 import model.dao.UtenteDAO;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.swing.DefaultListModel;
 
 import model.Gioco;
+import model.Recensione;
 import model.Utente;
 
 public class listaGiochiController {
 	static LinkedList<Gioco> mList = null;
+
 	
 	public static Object[][] listaGiochi() {
 		mList = new GiocoDAO().listaGiochi();
@@ -42,6 +45,20 @@ public class listaGiochiController {
 	public void aggiornaDatiGioco(Utente mUtente) {
 		// TODO Auto-generated method stub
 		new UtenteDAO().aggiornaDatiGioco(mUtente);
+	}
+
+	public static Object[][] listaRecensioni(int idGioco) {
+		LinkedList<Recensione> mRecensioni = new GiocoDAO().listaRecensioni(idGioco);
+		//System.out.println("LISTA : " + mRecensioni);
+		Object[][] mMatrix = new Object[mRecensioni.size()][1];
+		
+		int i = 0;
+		for(Recensione r : mRecensioni){
+			mMatrix[i][0] = (Object) r.getTesto();
+			i++;
+		}
+		//	mModelList.addElement(g);
+		return mMatrix;
 	}
 
 }
