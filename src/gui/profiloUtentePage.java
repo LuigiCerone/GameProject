@@ -111,6 +111,7 @@ public class profiloUtentePage extends JFrame {
 		
 		btnModeratore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				new profiloUtenteView().passaModeratore(pP);
 			}
 		});
 		

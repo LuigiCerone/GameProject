@@ -213,4 +213,79 @@ public final class Dbms {
 			closeConnectionToDB(con);
 			return mList;
 		}
+
+		public static LinkedList<Recensione> getRecensioniNonApprovate() throws SQLException {
+			String query = "SELECT * "
+					+ "FROM recensione "
+					+ "WHERE approvata = 0 ;";
+			
+			Connection con = connectToDB();
+			// Creiamo un oggetto Statement per poter interrogare il db.
+			Statement cmd = con.createStatement ();
+			// Eseguiamo una query e immagazziniamone i risultati in un oggetto ResultSet.
+			// String qry = "SELECT * FROM utente";
+			ResultSet res = cmd.executeQuery(query);
+			LinkedList<Recensione> mList = new LinkedList<Recensione>();
+			// Stampiamone i risultati riga per riga
+			while (res.next()) {
+				// (id, testo, approvata).
+				Recensione r = new Recensione(res.getInt("id"), res.getString("testo"), res.getBoolean("approvata"));
+				mList.add(r);
+			}
+			closeConnectionToDB(con);
+			return mList;
+		}
+
+		public static void approvaRecensione(String idRecensione) throws SQLException {
+			
+			// TODO Auto-generated method stub
+			String query = "UPDATE recensione"
+					+ " SET recensione.approvata = '1' "
+					+ " WHERE id = '" + idRecensione +"';";
+			
+			Connection con = connectToDB();
+			// Creiamo un oggetto Statement per poter interrogare il db.
+			Statement cmd = con.createStatement ();
+			// Eseguiamo una query e immagazziniamone i risultati in un oggetto ResultSet.
+			// String qry = "SELECT * FROM utente";
+			cmd.executeUpdate(query);
+		}
+
+		public static void disapprovaRecensione(String idRecensione) throws SQLException {
+			// TODO Auto-generated method stub
+			String query = "DELETE FROM recensione"
+					+ " WHERE id = '" + idRecensione +"';";
+			
+			Connection con = connectToDB();
+			// Creiamo un oggetto Statement per poter interrogare il db.
+			Statement cmd = con.createStatement ();
+			// Eseguiamo una query e immagazziniamone i risultati in un oggetto ResultSet.
+			// String qry = "SELECT * FROM utente";
+			cmd.executeUpdate(query);
+		}
+
+		public static LinkedList<Utente> getListaUtenti() throws SQLException{
+			String query = "SELECT utente.id, utente.username, utente_gioco.puntixp "
+					+ "FROM utente JOIN utente_gioco ON (utente.id = utente_gioco.id) ; ";
+			Connection con = connectToDB();
+			// Creiamo un oggetto Statement per poter interrogare il db.
+			Statement cmd = con.createStatement ();
+			// Eseguiamo una query e immagazziniamone i risultati in un oggetto ResultSet.
+			// String qry = "SELECT * FROM utente";
+			ResultSet res = cmd.executeQuery(query);
+			
+			LinkedList<Utente> mList = new LinkedList<Utente>();
+			// Stampiamone i risultati riga per riga
+			while (res.next()) {
+				// (id, username, xp).
+				Utente u = new Utente(res.getInt("id"), res.getString("username"), res.getInt("puntixp"));
+				System.out.println(u);
+				mList.add(u);
+				
+			}
+			closeConnectionToDB(con);
+			return mList;
+		}
+		
+		
 }

@@ -28,6 +28,14 @@ public class Utente {
 		this.livello = (int) Math.ceil(puntiXP/100);
 	}
 	
+	public Utente(int iD, String username, int puntiXP) {
+		this.ID = iD;
+		this.username = username;
+		this.puntiXP = puntiXP;
+		this.livello = (int) Math.ceil(puntiXP/100);
+	}
+
+	
 	public int getPuntiXP() {
 		return puntiXP;
 	}

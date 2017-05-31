@@ -137,6 +137,8 @@ public class listaGiochiPage extends JFrame {
 		spinner = new JSpinner();
 		spinner.setModel(new SpinnerNumberModel(1, 1, 5, 1));
 		spinner.setName("spinner");
+		//spinner.setEditor(null);
+		
 		mMap.put(spinner.getName(), spinner);
 		
 		JPanel nuovoVoto = new JPanel(new FlowLayout());

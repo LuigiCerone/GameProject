@@ -28,4 +28,32 @@ public class GiocoDAO implements GiocoDAO_Interface {
 		}
 		return mRecensioni;
 	}
+	
+	public LinkedList<Recensione> listaRecensioniNonApprovate() {
+		LinkedList<Recensione> mRecensioni = null;
+		try {
+			mRecensioni = Dbms.getRecensioniNonApprovate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return mRecensioni;
+	}
+
+	public void approvaRecensione(String idRecensione) {
+		// TODO Auto-generated method stub
+		try {
+			Dbms.approvaRecensione(idRecensione);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
+	public void disapprovaRecensione(String idRecensione) {
+		// TODO Auto-generated method stub
+		try {
+			Dbms.disapprovaRecensione(idRecensione);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 }

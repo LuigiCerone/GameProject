@@ -1,8 +1,10 @@
 package model.dao;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 import database.Dbms;
+import model.Recensione;
 import model.Utente;
 
 public class UtenteDAO implements UtenteDAO_Interface {
@@ -16,7 +18,7 @@ public class UtenteDAO implements UtenteDAO_Interface {
 		// TODO Auto-generated method stub
 		String query = "SELECT * "
 				+ "FROM utente JOIN utente_gioco ON (utente.id = utente_gioco.id) "
-				+ "WHERE username='"+user+"' AND password='"+password+"' ";
+				+ "WHERE username='"+user+"' AND password='"+password+"' ;";
 		Utente mObject = null;
 		try {
 			mObject = Dbms.queryUserType(query);
@@ -96,5 +98,16 @@ public class UtenteDAO implements UtenteDAO_Interface {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+	}
+
+	public LinkedList<Utente> listaUtenti() {
+		LinkedList<Utente> mUtenti = null;
+		
+		try {
+			mUtenti = Dbms.getListaUtenti();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return mUtenti;
 	}
 }
