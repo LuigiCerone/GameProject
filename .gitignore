@@ -6,4 +6,5 @@
 /.project
 /.gitignore
 /.classpath
-/README.md
+.project
+.classpath
