@@ -45,7 +45,6 @@ public class funzioniModeratoreView {
 	        	
 	        	if (!event.getValueIsAdjusting())//This line prevents double events
 	            System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
-	        	
 	        	//mostraRecensione(table.getValueAt(table.getSelectedRow(), 0).toString());
 	        	
 	        	approva.putClientProperty("id", table.getValueAt(table.getSelectedRow(), 0).toString());
@@ -91,7 +90,8 @@ public class funzioniModeratoreView {
 		
 		tableUtenti = new JTable(mMatrix,names);
 		tableUtenti.setDefaultEditor(Object.class, null);
-
+		
+		
 		scrollPaneUtenti = new JScrollPane(tableUtenti);
 		scrollPaneUtenti.setColumnHeaderView(tableUtenti.getTableHeader());
 		scrollPaneUtenti.setPreferredSize(new Dimension(800,200));
@@ -99,12 +99,9 @@ public class funzioniModeratoreView {
 		
 		tableUtenti.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
-	            // do some actions here, for example
-	            // print first column value from selected row
-	        	
-	        	if (!event.getValueIsAdjusting())//This line prevents double events
+	           	if (!event.getValueIsAdjusting())//This line prevents double events
 	            System.out.println(tableUtenti.getValueAt(tableUtenti.getSelectedRow(), 0).toString());
-	        	
+	           	tableUtenti.revalidate();
 	        	//mostraRecensione(table.getValueAt(table.getSelectedRow(), 0).toString());
 	        	
 	        	//creaListaRecensioni(recensioni,approva,disapprova);

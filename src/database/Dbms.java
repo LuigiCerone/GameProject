@@ -150,8 +150,7 @@ public final class Dbms {
 			// Stampiamone i risultati riga per riga
 			while (res.next()) {
 				// (id, nome, xp).
-				Gioco g = new Gioco(res.getInt("id"), res.getString("nome"), res.getInt("punti"),
-						res.getFloat("votomedio"), res.getInt("numerovoti"));
+				Gioco g = new Gioco(res.getInt("id"), res.getString("nome"), res.getInt("punti"));
 				mList.add(g);
 			}
 			closeConnectionToDB(con);
@@ -251,17 +250,15 @@ public final class Dbms {
 			cmd.executeUpdate(query);
 		}
 
-		public static void disapprovaRecensione(String idRecensione) throws SQLException {
+		public static void eseguiUpdate(String query) throws SQLException {
 			// TODO Auto-generated method stub
-			String query = "DELETE FROM recensione"
-					+ " WHERE id = '" + idRecensione +"';";
-			
 			Connection con = connectToDB();
 			// Creiamo un oggetto Statement per poter interrogare il db.
 			Statement cmd = con.createStatement ();
 			// Eseguiamo una query e immagazziniamone i risultati in un oggetto ResultSet.
 			// String qry = "SELECT * FROM utente";
 			cmd.executeUpdate(query);
+			closeConnectionToDB(con);
 		}
 
 		public static LinkedList<Utente> getListaUtenti() throws SQLException{
@@ -286,6 +283,49 @@ public final class Dbms {
 			closeConnectionToDB(con);
 			return mList;
 		}
+
+		public static void aggiungiVoto(String query) throws SQLException{
+			// TODO Auto-generated method stub
+			Connection con = connectToDB();
+			// Creiamo un oggetto Statement per poter interrogare il db.
+			Statement cmd = con.createStatement ();
+			// Eseguiamo una query e immagazziniamone i risultati in un oggetto ResultSet.
+			// String qry = "SELECT * FROM utente";
+			cmd.executeUpdate(query);
+			closeConnectionToDB(con);
+		}
+
+		public static float getMedia(String query) throws SQLException {
+			// TODO Auto-generated method stub
+			float media = 0;
+			Connection con = connectToDB();
+			// Creiamo un oggetto Statement per poter interrogare il db.
+			Statement cmd = con.createStatement ();
+			// Eseguiamo una query e immagazziniamone i risultati in un oggetto ResultSet.
+			// String qry = "SELECT * FROM utente";
+			ResultSet res = cmd.executeQuery(query);
+			while (res.next()) {
+				media = res.getFloat("media");
+			}
+			closeConnectionToDB(con);
+			return media;
+		}
 		
-		
+		public static boolean giaVotato(String query) throws SQLException {
+			// TODO Auto-generated method stub
+			int num = 0;
+			Connection con = connectToDB();
+			// Creiamo un oggetto Statement per poter interrogare il db.
+			Statement cmd = con.createStatement ();
+			// Eseguiamo una query e immagazziniamone i risultati in un oggetto ResultSet.
+			// String qry = "SELECT * FROM utente";
+			ResultSet res = cmd.executeQuery(query);
+			while (res.next()) {
+				num = res.getInt("numero");
+			}
+			closeConnectionToDB(con);
+			if(num == 0)
+				return false;
+			else return true;
+		}
 }

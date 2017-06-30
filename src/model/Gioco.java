@@ -1,13 +1,15 @@
 package model;
 
+import model.dao.GiocoDAO;
+
 public class Gioco {
 	private int Id;
 	private String nome;
 	private int valoreXP;
 	private float media;
-	private int numeroRecensioni;
+
 	
-	public float getMedia() {
+	 public float getMedia() {
 		return media;
 	}
 
@@ -15,20 +17,11 @@ public class Gioco {
 		this.media = media;
 	}
 
-	public int getNumeroRecensioni() {
-		return numeroRecensioni;
-	}
-
-	public void setNumeroRecensioni(int numeroRecensioni) {
-		this.numeroRecensioni = numeroRecensioni;
-	}
-
-	public Gioco(int id, String nome, int valoreXP, float media, int numero) {
+	public Gioco(int id, String nome, int valoreXP) {
 		Id = id;
 		this.nome = nome;
 		this.valoreXP = valoreXP;
-		this.media = media;
-		this.numeroRecensioni = numero;
+		this.media = new GiocoDAO().ottieniMedia(this.Id);
 	}
 	
 	public int getId() {

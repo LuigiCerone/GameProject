@@ -90,12 +90,16 @@ public class funzioniModeratorePage extends JFrame {
 		btnDisapprova.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new funzioniModeratoreView().disapprovaRecensione(btnDisapprova);
+				
+				cambioLivello.revalidate();
+				new funzioniModeratoreView().creaListaRecensioni(recensioni, btnApprova, btnDisapprova);
 			}
 		});
 		
 		btnApprova.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new funzioniModeratoreView().approvaRecensione(btnApprova);
+				new funzioniModeratoreView().creaListaRecensioni(recensioni, btnApprova, btnDisapprova);
 			}
 		});
 		

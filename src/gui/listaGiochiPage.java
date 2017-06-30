@@ -175,9 +175,6 @@ public class listaGiochiPage extends JFrame {
 		recensioniPanel.add(lblRecensioni);
 		
 		// lista giochi.
-		//new listaGiochiView().creaLista(contentPane, infoGioco , recensioniGioco, list, lblNomeGioco, lblInfoGioco, buttonGioca, 
-		//				nuovoVoto, lblVotoGioco, btnNuovoVoto);
-		
 		new listaGiochiView().creaLista1(lGP, mMap);
 		
 		buttonGioca.addActionListener(new ActionListener() {
@@ -196,7 +193,7 @@ public class listaGiochiPage extends JFrame {
 		btnNuovoVoto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				new listaGiochiView().aggiungiVotoGioco((Integer)spinner.getValue(), btnNuovoVoto);
+				new listaGiochiView().aggiungiVotoGioco((int)spinner.getValue(), btnNuovoVoto);
 			}
 		});
 	}

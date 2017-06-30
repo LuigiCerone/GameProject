@@ -61,4 +61,18 @@ public class listaGiochiController {
 		return mMatrix;
 	}
 
+	public static void aggiungiVoto(int idGioco, int idUtente, Integer votoInserito) {
+		// TODO Auto-generated method stub
+		new GiocoDAO().aggiungiVoto(idGioco,idUtente,votoInserito);
+	}
+
+	public static boolean giocoGiaVotato(int idGioco, int idUtente, int votoInserito) {
+		return new GiocoDAO().giocoGiaVotato(idGioco, idUtente, votoInserito);
+	}
+
+	public static void modificaVoto(int idGioco, int idUtente, int votoInserito) {
+		// TODO Auto-generated method stub
+		new GiocoDAO().modificaVoto(idGioco,idUtente, votoInserito);
+	}
+
 }
