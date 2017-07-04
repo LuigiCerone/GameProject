@@ -56,6 +56,14 @@ public class funzioniModeratoreController {
 			}
 			return mMatrix;
 		}
+
+		public static void modificaXPUtente(String op) {
+			new UtenteDAO().modificaXPUtente(new Integer(op), loginController.mObject);
+		}
+
+		public static void aggiornaDatiGioco() {
+			new UtenteDAO().aggiornaDatiGioco(loginController.mObject);
+		}
 		
 		
 

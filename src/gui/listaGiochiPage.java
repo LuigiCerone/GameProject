@@ -115,7 +115,6 @@ public class listaGiochiPage extends JFrame {
 		bottomPanel.add(lblVoto);
 		mMap.put(lblVoto.getName(), lblVoto);
 		
-		
 		contentPane.add(BorderLayout.EAST, topPanel);
 		
 		//infoGioco.add(button);
@@ -174,6 +173,13 @@ public class listaGiochiPage extends JFrame {
 		
 		recensioniPanel.add(lblRecensioni);
 		
+		JButton aggiungiRecButton = new JButton("Aggiungi recensione");
+		aggiungiRecButton.setHorizontalAlignment(SwingConstants.LEFT);
+		aggiungiRecButton.setVisible(false);
+		aggiungiRecButton.setName("aggiungiRecButton");
+		mMap.put("aggiungiRecButton", aggiungiRecButton);
+		nuovoVoto.add(aggiungiRecButton);
+		
 		// lista giochi.
 		new listaGiochiView().creaLista1(lGP, mMap);
 		
@@ -194,6 +200,12 @@ public class listaGiochiPage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				new listaGiochiView().aggiungiVotoGioco((int)spinner.getValue(), btnNuovoVoto);
+			}
+		});
+		
+		aggiungiRecButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				new listaGiochiView().aggiungiRecensione(aggiungiRecButton);
 			}
 		});
 	}

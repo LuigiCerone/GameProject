@@ -110,4 +110,12 @@ public class GiocoDAO implements GiocoDAO_Interface {
 		}
 				
 	}
+
+	public void aggiungiRecensione(String recensioneText, int idGioco) {
+		try {
+			Dbms.aggiungiRecensione(recensioneText, idGioco);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 }

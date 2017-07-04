@@ -52,13 +52,12 @@ public class funzioniModeratorePage extends JFrame {
 		getContentPane().add(recensioni);
 		
 		JButton btnDisapprova = new JButton("Disapprova");
-		
 		recensioni.add(btnDisapprova);
-		
 		JButton btnApprova = new JButton("Approva");
-		
 		recensioni.add(btnApprova);
-				
+		
+		JButton btnTornaDietro = new JButton("Torna al menu");
+		recensioni.add(btnTornaDietro);
 		
 		JPanel cambioLivello = new JPanel();
 		getContentPane().add(cambioLivello);
@@ -90,22 +89,24 @@ public class funzioniModeratorePage extends JFrame {
 		btnDisapprova.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new funzioniModeratoreView().disapprovaRecensione(btnDisapprova);
-				
-				cambioLivello.revalidate();
-				new funzioniModeratoreView().creaListaRecensioni(recensioni, btnApprova, btnDisapprova);
 			}
 		});
 		
 		btnApprova.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new funzioniModeratoreView().approvaRecensione(btnApprova);
-				new funzioniModeratoreView().creaListaRecensioni(recensioni, btnApprova, btnDisapprova);
 			}
 		});
 		
 		btnAfferma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new funzioniModeratoreView().modificaXPUtente(comboBox, xpField, btnAfferma);
+			}
+		});
+		
+		btnTornaDietro.addActionListener(new ActionListener()  {
+			public void actionPerformed(ActionEvent e) {
+				new funzioniModeratoreView().tornaDietro(fMP);
 			}
 		});
 	}

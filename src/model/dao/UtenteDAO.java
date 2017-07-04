@@ -2,8 +2,11 @@ package model.dao;
 
 import java.sql.SQLException;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.TreeMap;
 
 import database.Dbms;
+import model.Livello;
 import model.Recensione;
 import model.Utente;
 
@@ -81,7 +84,7 @@ public class UtenteDAO implements UtenteDAO_Interface {
 				+ valoreXPGioco + "'  WHERE utente_gioco.id = '"+ userID + "';";
 		System.out.println(query);
 		try {
-			Dbms.aggiungiXPUtente(query);
+			Dbms.updateQuery(query);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -109,5 +112,30 @@ public class UtenteDAO implements UtenteDAO_Interface {
 			// TODO: handle exception
 		}
 		return mUtenti;
+	}
+
+	public void modificaXPUtente(Integer puntiXP, Utente mUtente) {
+		try {
+			String query = "UPDATE utente_gioco "
+					+ "SET utente_gioco.puntixp = puntixp +" + puntiXP +
+					" WHERE utente_gioco.id = " + mUtente.getID();
+			System.out.println(query);
+			Dbms.updateQuery(query);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
+	public List<Livello> timeLineList(int id) {
+		List<Livello> timeLineList = null;
+		try {
+			String query = "SELECT data, livello"
+					+ " FROM timeline "
+					+ " WHERE id_giocatore = " + id + ";";
+			timeLineList = Dbms.getTimeLine(query);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return timeLineList;
 	}
 }

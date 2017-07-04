@@ -7,8 +7,12 @@ package database;
 
 import java.sql.*;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import model.Gioco;
+import model.Livello;
 import model.Moderatore;
 import model.Recensione;
 import model.Utente;
@@ -157,7 +161,7 @@ public final class Dbms {
 			return mList;
 		}
 
-		public static void aggiungiXPUtente(String query) throws SQLException {
+		public static void updateQuery(String query) throws SQLException {
 			// TODO Auto-generated method stub
 			Connection con = connectToDB();
 			Statement cmd = con.createStatement ();
@@ -327,5 +331,32 @@ public final class Dbms {
 			if(num == 0)
 				return false;
 			else return true;
+		}
+
+		public static List<Livello> getTimeLine(String query) throws SQLException {
+			LinkedList<Livello> mList= new LinkedList<Livello>();
+			Connection con = connectToDB();
+			Statement cmd = con.createStatement();
+			ResultSet res = cmd.executeQuery(query);
+			while(res.next()){
+				mList.add(new Livello (res.getString("data"), res.getInt("livello")));
+			}
+			
+			closeConnectionToDB(con);
+			return mList;
+		}
+
+		public static void aggiungiRecensione(String recensioneText, int idGioco) throws SQLException {
+			Connection con = connectToDB();
+			String query = "INSERT INTO recensione"
+					+ " (id, testo, approvata, id_gioco) "
+					+ " VALUES (null, ?, false, ?) ;";
+			
+			PreparedStatement cmd = con.prepareStatement(query);
+			cmd.setString(1, recensioneText);
+			cmd.setInt(2, idGioco);
+			System.out.println(query);
+			
+			cmd.executeUpdate();
 		}
 }

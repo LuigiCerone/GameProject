@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Vector;
@@ -26,6 +27,7 @@ import javax.swing.event.ListSelectionListener;
 import controller.listaGiochiController;
 import controller.loginController;
 import model.Gioco;
+import gui.aggiungiRecensionePage;
 import gui.listaGiochiPage;
 import gui.profiloUtentePage;
 
@@ -43,6 +45,7 @@ public class listaGiochiView {
 	private JTable tableRecensioni = new JTable();
 	private JScrollPane scrollPaneRecensioni = new JScrollPane();
 	private JPanel recensioniPanel = new JPanel();
+	private JButton aggiungiRecButton = null;
 	
 	public void aggiungiXPUtente(int userID, JButton button) {
 		// TODO Auto-generated method stub
@@ -123,7 +126,6 @@ public class listaGiochiView {
 		lblInfoGioco.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		infoGioco.add(lblInfoGioco);
 
-
 		// Bottone valore.
 		buttonGioca = (JButton) mMap.get("buttonGioca");
 		buttonGioca.setVisible(true);
@@ -158,8 +160,12 @@ public class listaGiochiView {
 		scrollPaneRecensioni.setPreferredSize(new Dimension(400,130));
 		mMap.put(scrollPane.getName(), scrollPaneRecensioni);
 		
-		
 		recensioniPanel.add(scrollPaneRecensioni);
+		
+		// Aggiungi recensione gioco.
+		aggiungiRecButton = (JButton) mMap.get("aggiungiRecButton");
+		aggiungiRecButton.setVisible(true);
+		aggiungiRecButton.putClientProperty("id", gRichiesto.getId());
 	}
 
 
@@ -177,6 +183,13 @@ public class listaGiochiView {
 			listaGiochiController.aggiungiVoto(idGioco,idUtente,votoInserito);
 			System.out.println("Nuovo voto");
 		}
+	}
+
+
+	public void aggiungiRecensione(JButton aggiungiRecButton) {
+		int idGioco = (int) aggiungiRecButton.getClientProperty("id");
+		aggiungiRecensionePage frameAggiungiRec = new aggiungiRecensionePage(idGioco);
+		frameAggiungiRec.setVisible(true);
 	}
 
 }
