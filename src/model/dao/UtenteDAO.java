@@ -12,11 +12,6 @@ import model.Utente;
 
 public class UtenteDAO implements UtenteDAO_Interface {
 	@Override
-	public boolean ËRegistrato() {
-		return false;
-	}
-
-	@Override
 	public Utente tipoUtente(String user, String password) {
 		// TODO Auto-generated method stub
 		String query = "SELECT * "
@@ -114,11 +109,11 @@ public class UtenteDAO implements UtenteDAO_Interface {
 		return mUtenti;
 	}
 
-	public void modificaXPUtente(Integer puntiXP, Utente mUtente) {
+	public void modificaXPUtente(Integer puntiXP, Integer id) {
 		try {
 			String query = "UPDATE utente_gioco "
 					+ "SET utente_gioco.puntixp = puntixp +" + puntiXP +
-					" WHERE utente_gioco.id = " + mUtente.getID();
+					" WHERE utente_gioco.id = " + id;
 			System.out.println(query);
 			Dbms.updateQuery(query);
 		} catch (Exception e) {

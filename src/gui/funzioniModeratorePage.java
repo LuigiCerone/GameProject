@@ -82,25 +82,30 @@ public class funzioniModeratorePage extends JFrame {
 		
 		cambioLivello.add(btnAfferma);
 		
-		new funzioniModeratoreView().creaListaUtenti(cambioLivello);
+		new funzioniModeratoreView().creaListaUtenti(cambioLivello, btnAfferma);
+		
+		JLabel lblErroreUtenti = new JLabel("");
+		cambioLivello.add(lblErroreUtenti);
+		JLabel lblErroreRecensioni = new JLabel("");
+		recensioni.add(lblErroreRecensioni);
 	
 		new funzioniModeratoreView().creaListaRecensioni(recensioni, btnApprova, btnDisapprova);
 		
 		btnDisapprova.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new funzioniModeratoreView().disapprovaRecensione(btnDisapprova);
+				new funzioniModeratoreView().disapprovaRecensione(btnDisapprova, lblErroreRecensioni);
 			}
 		});
 		
 		btnApprova.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new funzioniModeratoreView().approvaRecensione(btnApprova);
+				new funzioniModeratoreView().approvaRecensione(btnApprova, lblErroreRecensioni);
 			}
 		});
 		
 		btnAfferma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new funzioniModeratoreView().modificaXPUtente(comboBox, xpField, btnAfferma);
+				new funzioniModeratoreView().modificaXPUtente(comboBox, xpField, btnAfferma, lblErroreUtenti);
 			}
 		});
 		

@@ -26,7 +26,11 @@ public final class Dbms {
 	protected static String PSW = "gaming";
 	
 	protected static String TIPO = "tipo";
-	
+		
+		/**
+		 * Return a connection object used to connect to the database.
+		 * 
+		 * */
 		private static Connection connectToDB() {
 			Connection con  = null;
 			try {
@@ -47,6 +51,14 @@ public final class Dbms {
 			return con;
 		}
 		
+		/**
+		 * Method used to perform query on the database that returns
+		 * a boolean values.
+		 * 
+		 * @param query The query that will be performed.
+		 * @return false if the result's length is 0 
+		 * 		   true otherwise.
+		 */
 		public static boolean booleanQueryDB(String query) throws SQLException{
 			Connection con = connectToDB();
 			// Creiamo un oggetto Statement per poter interrogare il db.

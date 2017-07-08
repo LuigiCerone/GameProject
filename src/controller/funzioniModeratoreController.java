@@ -4,6 +4,7 @@ import model.dao.GiocoDAO;
 import model.dao.UtenteDAO;
 
 import java.util.LinkedList;
+import java.util.Vector;
 
 import model.Recensione;
 import model.Utente;
@@ -57,14 +58,15 @@ public class funzioniModeratoreController {
 			return mMatrix;
 		}
 
-		public static void modificaXPUtente(String op) {
-			new UtenteDAO().modificaXPUtente(new Integer(op), loginController.mObject);
+		public static void modificaXPUtente(String op, String id) throws NumberFormatException {
+			try {
+				new UtenteDAO().modificaXPUtente(new Integer(op), new Integer(id));
+			} catch (Exception e) {
+				System.out.println("Errore formato numero!");
+			}
 		}
 
 		public static void aggiornaDatiGioco() {
 			new UtenteDAO().aggiornaDatiGioco(loginController.mObject);
-		}
-		
-		
-
+		}	
 }
