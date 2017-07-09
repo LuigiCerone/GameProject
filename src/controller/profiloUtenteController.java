@@ -1,13 +1,16 @@
 package controller;
 
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import model.Livello;
 import model.dao.UtenteDAO;
 
 public class profiloUtenteController {
+	
+	/**
+	 * Method used to fetch from the database all the infromation related to the user's levels.
+	 * 
+	 * @return mMatrix a matrix of objects.*/
 	public static Object[][] timeLine() {
 		List<Livello> timeLineList = new UtenteDAO().timeLineList(loginController.mObject.getID());
 		Object[][] mMatrix = new Object[timeLineList.size()][2];

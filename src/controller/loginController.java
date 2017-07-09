@@ -1,7 +1,3 @@
-/*
- * @author Luigi Cerone
- * @version 1.0
- * */
 package controller;
 
 import model.Moderatore;
@@ -10,27 +6,31 @@ import model.dao.UtenteDAO;
 
 public class loginController {
 	public static Utente mObject = null;
+	
+	/**
+	 * Method used to determine if the user exists and if so of which type he/she is.
+	 * 
+	 * @param username user's username
+	 * @param password user's password
+	 * @return true if the user exists 
+	 * false otherwise.
+	 * */
 	public static boolean controllaUtente(String username, String password){
 		
 		mObject = new UtenteDAO().tipoUtente(username, password);
 		
-		// l'utente non esiste.
+		// The user doesn't exist.
 		if(mObject == null){
 			return false;
 		}
-		// l'utente è un giocatore.
-		/*
-		 if(mObject instanceof Utente){
-			mObject = (Utente) mObject;
-			System.out.println(((Utente) mObject).getNome());
-			return true;
-		} */
-		// l'utente è un moderatore.
+		// The user is a moderator.
 		if(mObject instanceof Moderatore){
 			mObject = (Moderatore) mObject;
 			System.out.println(((Moderatore) mObject).getNome());
 			return true;
 		}
+		
+		// The user is a simple user i.e. a gamer.
 		return true;
 		
 	}

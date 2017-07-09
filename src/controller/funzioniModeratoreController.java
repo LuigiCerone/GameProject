@@ -1,19 +1,23 @@
 package controller;
 
-import model.dao.GiocoDAO;
-import model.dao.UtenteDAO;
-
 import java.util.LinkedList;
-import java.util.Vector;
 
 import model.Recensione;
 import model.Utente;
+import model.dao.GiocoDAO;
+import model.dao.UtenteDAO;
 
 public class funzioniModeratoreController {
 		
 		static LinkedList<Recensione> mRecensioni = null;
 		static LinkedList<Utente> mUtenti = null;
 			
+		/**
+		 * Method used to create a matrix of the reviews that haven't been approved yet.
+		 * This matrix is used to create the DefaultTableModel.
+		 * 
+		 * @return a matrix of objects.
+		 * */
 		public static Object[][] listaRecensioni() {
 			
 			mRecensioni= new GiocoDAO().listaRecensioniNonApprovate();
@@ -30,25 +34,43 @@ public class funzioniModeratoreController {
 			return mMatrix;
 			
 		}
-
+		
+		/**
+		 * Method used to approve a specific review
+		 * 
+		 * @param idRecensione the review's ID that has to be approved.
+		 * */
 		public static void approvaRecensione(String idRecensione) {
 			// TODO Auto-generated method stub
 			new GiocoDAO().approvaRecensione(idRecensione);
 			
 		}
 		
+		/**
+		 * Method used to disapprove a specific review
+		 * 
+		 * @param idRecensione the review's ID that has to be disapproved.
+		 * */
 		public static void disapprovaRecensione(String idRecensione) {
 			// TODO Auto-generated method stub
 			new GiocoDAO().disapprovaRecensione(idRecensione);
 			
 		}
 
-		public static Object[][] listaUtenti() {
+		/**
+		 * Method used to create a matrix of the users.
+		 * This matrix is used to create the DefaultTableModel.
+		 * @param iD the currently logged in moderator
+		 * 
+		 * @return a matrix of objects.
+		 * */
+		public static Object[][] listaUtenti(int iD) {
 			mUtenti= new UtenteDAO().listaUtenti();
-			Object[][] mMatrix = new Object[mUtenti.size()][5];
+			Object[][] mMatrix = new Object[mUtenti.size() - 1][5];
 			
 			int i = 0;
 			for(Utente u : mUtenti){
+				if(u.getID() == iD) continue;
 				mMatrix[i][0] = (Object)u.getID();
 				mMatrix[i][1] = (Object)u.getUsername();
 				mMatrix[i][2] = (Object)u.getPuntiXP();
@@ -58,6 +80,12 @@ public class funzioniModeratoreController {
 			return mMatrix;
 		}
 
+		/**
+		 * Method used to modify the user's xp points. Only a moderator can use this method.
+		 * 
+		 * @param op a String that contains the xp points to add/remove to the user
+		 * @param id user's id.
+		 * */
 		public static void modificaXPUtente(String op, String id) throws NumberFormatException {
 			try {
 				new UtenteDAO().modificaXPUtente(new Integer(op), new Integer(id));
@@ -66,6 +94,9 @@ public class funzioniModeratoreController {
 			}
 		}
 
+		/**
+		 * Method used to update user's data related to gaming.
+		 * */
 		public static void aggiornaDatiGioco() {
 			new UtenteDAO().aggiornaDatiGioco(loginController.mObject);
 		}	

@@ -2,37 +2,29 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Vector;
+import java.util.TreeMap;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JViewport;
-import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.event.ListSelectionListener;
 
 import controller.listaGiochiController;
 import controller.loginController;
-import model.Gioco;
 import gui.aggiungiRecensionePage;
 import gui.listaGiochiPage;
 import gui.profiloUtentePage;
+import model.Gioco;
 
 public class listaGiochiView {
-	private JTable table = new JTable();
+	private static JTable tableGiochi = new JTable();
 	private JScrollPane scrollPane = new JScrollPane();
 	private JLabel lblNomeGioco = new JLabel();
 	private JLabel lblInfoGioco = new JLabel();
@@ -47,13 +39,22 @@ public class listaGiochiView {
 	private JPanel recensioniPanel = new JPanel();
 	private JButton aggiungiRecButton = null;
 	
+	/**
+	 * Method used to add xp to the user when he/she decides to play with a game.
+	 * 
+	 * @param userID the user's ID
+	 * @param button a JButton that when clicked means "played".
+	 *  */
 	public void aggiungiXPUtente(int userID, JButton button) {
-		// TODO Auto-generated method stub
 		int valoreXPGioco = (int) button.getClientProperty("xp");
 		listaGiochiController.aggiungiXPUtente(userID, valoreXPGioco);
 	}
 
-
+	/**
+	 * Method used to close the frame
+	 * 
+	 * @param lGP the frame that has to be closed.
+	 * */
 	public void tornaDietro(listaGiochiPage lGP) {
 		// TODO Auto-generated method stub
 		lGP.setVisible(false);
@@ -64,19 +65,25 @@ public class listaGiochiView {
 	}
 
 
-	public void creaLista1(listaGiochiPage lGP, HashMap<String, Component> mMap) {
-		// TODO Auto-generated method stub
+	/**
+	 * Method used to create the list of all the games available on the platform.
+	 * This information will be inserted into a JTable and a JScrollPane.
+	 * 
+	 * @param lGP the frame where the list needs to be placed
+	 * @param mMap a TreeMap that is used to keep track of all the Components necessary.
+	 * */
+	public void creaLista(listaGiochiPage lGP, TreeMap<String,Component> mMap) {
 		String[] names = {"Id", "Nome", "Valore", "Media voti"};
 		Object[][] mMatrix = listaGiochiController.listaGiochi();
 		
-		table = new JTable(mMatrix,names);
-		table.setDefaultEditor(Object.class, null);
-		table.setName("table");
-		mMap.put(table.getName(), table);
+		tableGiochi = new JTable(mMatrix,names);
+		tableGiochi.setDefaultEditor(Object.class, null);
+		tableGiochi.setName("tableGiochi");
+		mMap.put(tableGiochi.getName(), tableGiochi);
 
-		scrollPane = new JScrollPane(table);
-		scrollPane.setColumnHeaderView(table.getTableHeader());
-		scrollPane.setPreferredSize(new Dimension(800,300));
+		scrollPane = new JScrollPane(tableGiochi);
+		scrollPane.setColumnHeaderView(tableGiochi.getTableHeader());
+		scrollPane.setPreferredSize(new Dimension(800,130));
 		scrollPane.setName("scrollPane");
 		mMap.put(scrollPane.getName(), scrollPane);
 		
@@ -84,24 +91,27 @@ public class listaGiochiView {
 		contentPane.add(scrollPane);
 		
 		//System.out.println(mMap.toString());
-		//Finder listaGiochiFinder = new Finder(lGP);
 		
-		//System.out.println("QUIIII");
-		table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+		tableGiochi.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
 	            // do some actions here, for example
 	            // print first column value from selected row
 	        	if (!event.getValueIsAdjusting())//This line prevents double events
-	            System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
+	            //System.out.println(tableGiochi.getValueAt(tableGiochi.getSelectedRow(), 0).toString());
 	        	
-	        	mostraGioco(table.getValueAt(table.getSelectedRow(), 0).toString(), lGP, mMap);
-	        	
+	        	mostraGioco(tableGiochi.getValueAt(tableGiochi.getSelectedRow(), 0).toString(), lGP, mMap);
+	        	btnNuovoVoto.putClientProperty("riga", tableGiochi.getSelectedRow());
 	        }
 	    });
 	}
 
-	private void mostraGioco(String idGioco, listaGiochiPage lGP,  HashMap<String, Component> mMap){
-		// TODO Auto-generated method stub
+	/**
+	 * Method used to display all the information about the requested game.
+	 * 
+	 * @param idGioco the requested game's ID
+	 * @param mMap a HashMap that is used to keep track of all the Components necessary.
+	 * */
+	private void mostraGioco(String idGioco, listaGiochiPage lGP,  TreeMap<String,Component> mMap){
 		
 		recensioniPanel = (JPanel) mMap.get("recensioniPanel");
 		recensioniPanel.removeAll();
@@ -120,8 +130,7 @@ public class listaGiochiView {
 		infoGioco.add(lblNomeGioco, BorderLayout.NORTH);
 
 		lblInfoGioco = (JLabel) mMap.get("lblInfoGioco");
-		lblInfoGioco.setText("<html> <ul> <li> Valore XP: " + gRichiesto.getValoreXP()+"</li>"
-				+ "<li>Voto medio: " + gRichiesto.getMedia() + "</li></ul></html>");
+		lblInfoGioco.setText("<html> <ul> <li> Valore XP: " + gRichiesto.getValoreXP()+"</li></ul></html>");
 		lblInfoGioco.setVerticalAlignment(JLabel.NORTH);
 		lblInfoGioco.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		infoGioco.add(lblInfoGioco);
@@ -131,28 +140,23 @@ public class listaGiochiView {
 		buttonGioca.setVisible(true);
 		buttonGioca.putClientProperty("xp", gRichiesto.getValoreXP());
 
-		lblVotoGioco = (JLabel) mMap.get("lblVotoGioco");
-		lblVotoGioco.setVerticalAlignment(JLabel.NORTH);
-		lblVotoGioco.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblVotoGioco.setText(gRichiesto.getMedia() + "");
-
 		btnNuovoVoto = (JButton) mMap.get("btnNuovoVoto");	
 		btnNuovoVoto.setVisible(true);
 		btnNuovoVoto.putClientProperty("id", gRichiesto.getId());
 		
-		// Info inserimento nuovo gioco.
+		// New vote.
 		nuovoVoto = (JPanel) mMap.get("nuovoVoto");
 		nuovoVoto.setVisible(true);
 		
 		
-		// Recensioni del gioco clickato.
+		// List of the reviews.
 		String[] name = {"Testo"};
 		Object[][] mMatrix = listaGiochiController.listaRecensioni(gRichiesto.getId());
 		
 		tableRecensioni = new JTable(mMatrix,name);
 		tableRecensioni.setDefaultEditor(Object.class, null);
 		tableRecensioni.setName("tableRecensioni");
-		mMap.put(table.getName(), tableRecensioni);
+		mMap.put(tableRecensioni.getName(), tableRecensioni);
 
 		scrollPaneRecensioni = new JScrollPane(tableRecensioni);
 		scrollPaneRecensioni.setColumnHeaderView(tableRecensioni.getTableHeader());
@@ -162,30 +166,41 @@ public class listaGiochiView {
 		
 		recensioniPanel.add(scrollPaneRecensioni);
 		
-		// Aggiungi recensione gioco.
+		// New review.
 		aggiungiRecButton = (JButton) mMap.get("aggiungiRecButton");
 		aggiungiRecButton.setVisible(true);
 		aggiungiRecButton.putClientProperty("id", gRichiesto.getId());
 	}
 
-
+	/**
+	 * Method used to add a new vote to the game
+	 * 
+	 * @param votoInserito the new vote
+	 * @param btnNuovoVoto a JButton that when clicked insert the new vote.
+	 * */
 	public void aggiungiVotoGioco(int votoInserito, JButton btnNuovoVoto) {
-		// TODO Auto-generated method stub
 		int idGioco = (int) btnNuovoVoto.getClientProperty("id");
 		int idUtente = loginController.mObject.getID();
 		
-		if(listaGiochiController.giocoGiaVotato(idGioco, idUtente, votoInserito)){
-			System.out.println("Gia votato");
+		if(listaGiochiController.giocoGiaVotato(idGioco, idUtente)){
+			//System.out.println("Gia votato");
 			listaGiochiController.modificaVoto(idGioco, idUtente, votoInserito);
 		}
 		else{
 			//System.out.println("Voto "+ votoInserito + " per " + idGioco + " da " + idUtente);
 			listaGiochiController.aggiungiVoto(idGioco,idUtente,votoInserito);
-			System.out.println("Nuovo voto");
+			//System.out.println("Nuovo voto");
 		}
+		
+		tableGiochi.getModel().setValueAt(listaGiochiController.ottieniMedia(idGioco), (int) btnNuovoVoto.getClientProperty("riga"), 3);
 	}
 
 
+	/**
+	 * Method used to add a new review.
+	 * 
+	 * @param aggiungiRecButton a JButton that when clicked insert the new review.
+	 * */
 	public void aggiungiRecensione(JButton aggiungiRecButton) {
 		int idGioco = (int) aggiungiRecButton.getClientProperty("id");
 		aggiungiRecensionePage frameAggiungiRec = new aggiungiRecensionePage(idGioco);

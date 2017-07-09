@@ -64,8 +64,8 @@ public class Utente {
 	}
 	
 	/**
-	 * Set user's xp points.
-	 * @param puntiXP
+	 * Set user's xp points
+	 * @param puntiXP xp point's.
 	 * */
 	public void setPuntiXP(int puntiXP) {
 		this.puntiXP = puntiXP;

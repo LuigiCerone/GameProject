@@ -1,20 +1,36 @@
 # GameProject
 
-<h2>Piattaforma di gaming in Java, progetto OOP 2016/17</h2>
+<h2>Java gaming platform, OOP course project 2016/17</h2>
 <hr>
-<h3>Membri Team</h3>
+<h3>Team</h3>
 <ul>
 <li>Taglieri Alessandro 243488 
 <li>Rosati Danilo 243748
 <li>Cerone Luigi 242895
 </ul>
 
-<h3>Struttura Repository</h3>
+<h3>Repository structure</h3>
 
-<b>GamingPlatformProject_OOP</b> : root del progetto <br>
+<b>`src`</b> : folder for project's source code <br>
+<b>`doc`</b> : folder for project's documentation <br>
+<b>`javadoc`</b> : folder for project's javadoc files <br>
+<b>`src/img`</b> : folder for trophies' images <br>
 
-<b>src</b> : directory che conterrà il codice sorgente del progetto <br>
-<b>doc</b> : directory che conterrà i documenti di design del progetto <br>
-<b>javadoc</b> : directory che conterrà il codice javadoc del progetto <br>
 
-<h3>Contatti</h3>
+<h3>Installation</h3>
+In order to run the project a user in the MySQL database is required with 
+`CREATE USER 'gaming'@'localhost' IDENTIFIED BY 'gaming';`
+`GRANT ALL PRIVILEGES ON * . * TO 'gaming'@'localhost';`
+Then
+<ol>
+<li>Clone this repo <code>git clone https://github.com/LuigiCerone/GameProject.git</code></li>
+<li><code>cd</code> into the folder cloned</li>
+<li><code>mysql -u gaming -p src/gaming.sql</code></li>
+<li>Launch the app either with <code>java -jar src/GamingPlatform.jar</code> or via GUI</ol>
+
+<h3>Contacts</h3>
+luigiceroneaq@gmail.com
+taglieri96@gmail.com
+danilorosati96@gmail.com
+
+

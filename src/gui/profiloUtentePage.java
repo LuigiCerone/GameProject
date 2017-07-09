@@ -1,31 +1,22 @@
-/*
- * @author
- * @version 1.0
- * */
-
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import controller.loginController;
 import model.Moderatore;
 import model.Utente;
 import view.profiloUtenteView;
-
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.GridLayout;
-
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class profiloUtentePage extends JFrame {
 	
@@ -34,8 +25,9 @@ public class profiloUtentePage extends JFrame {
 	
 
 	/**
-	 * Create the frame.
-	 * @param mObject 
+	 * Frame constructor.
+	 * 
+	 * @param mUtente the user's currently logged in.
 	 */
 	public profiloUtentePage(Utente mUtente) {
 		profiloUtentePage pP = this;
@@ -44,7 +36,7 @@ public class profiloUtentePage extends JFrame {
 		
 		if(mUtente instanceof Moderatore)
 			isMod = true;
-		// se mod mostra button extra.
+		// If the user is moderator the button needs to be displayed.
 		
 		GridLayout layout = new GridLayout(3,2);
 		
@@ -74,6 +66,10 @@ public class profiloUtentePage extends JFrame {
 		contentPane.add(topLeftPanel);
 		contentPane.add(topRightPanel);
 		
+		JButton btnLogOut = new JButton("Log out");
+		
+		topRightPanel.add(btnLogOut);
+		
 		JPanel middleLeftPanel = new JPanel();
 		JPanel middleRightPanel = new JPanel();
 		
@@ -97,7 +93,6 @@ public class profiloUtentePage extends JFrame {
 				+ "<h1>Sezione gaming</h1>"
 				+ "<ul>"
 				+ "<li>Livello:  <b>"+ mUtente.getLivello() + "</b></li> "
-				+ "<li>Trofei:  <b>" + mUtente.getCognome() + "</b></li>"
 				+ "<li>Punti esperienza:  <b>" + mUtente.getPuntiXP() + "</b></li>"
 				+ "</ul></html>");
 		lblGaming.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -127,9 +122,16 @@ public class profiloUtentePage extends JFrame {
 		
 		JButton btnListaGiochi = new JButton("Lista giochi");
 		btnListaGiochi.setBounds(614, 365, 152, 68);
-		middleRightPanel.add(btnListaGiochi);
 		
-		bottomRightPanel.add(btnListaGiochi);
+		
+		JButton btnListaTrofei = new JButton("Lista trofei");
+		JPanel buttonPanel = new JPanel(new FlowLayout());
+		
+		buttonPanel.add(btnListaGiochi);
+		buttonPanel.add(btnListaTrofei);
+		
+		middleRightPanel.add(buttonPanel);
+		//bottomRightPanel.add(btnListaGiochi);
 		contentPane.add(bottomRightPanel);
 		
 		btnModeratore.addActionListener(new ActionListener() {
@@ -141,6 +143,19 @@ public class profiloUtentePage extends JFrame {
 		btnListaGiochi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new profiloUtenteView().visualizzaListaGiochi(pP,mUtente.getID());
+			}
+		});
+		
+		btnListaTrofei.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new profiloUtenteView().visualizzaListaTrofei(mUtente.getID(), mUtente.getLivello());
+			}
+		});
+		
+		btnLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				loginController.mObject = null;
+				new profiloUtenteView().logOut(pP);
 			}
 		});
 	}

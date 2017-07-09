@@ -1,6 +1,5 @@
 package model.dao;
 
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public interface UtenteDAO_Interface {
 	
 	public LinkedList<Utente> listaUtenti();
 	
-	public void modificaXPUtente(Integer puntiXP, Integer id);
+	public void modificaXPUtente(int puntiXP, int id);
 	
 	public List<Livello> timeLineList(int id);
 }

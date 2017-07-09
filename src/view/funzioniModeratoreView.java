@@ -1,13 +1,11 @@
 package view;
 
 import java.awt.Dimension;
-import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -15,9 +13,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import controller.funzioniModeratoreController;
@@ -35,6 +30,14 @@ public class funzioniModeratoreView {
 	private static DefaultTableModel tableRecensioniModel;
 	private static DefaultTableModel tableUtentiModel;
 
+	/**
+	 * Method used to create the list of the reviews that haven't been approved yet.
+	 * This list is inserted into a JTable object which is in turn inserted into a JScrollPane
+	 * 
+	 * @param recensioni a JPanel where the JScrollPane will appear
+	 * @param approva a JButton that when clicked approves the currently selected review
+	 * @param disapprova a JButton that when clicked disapproves the currently selected review. 
+	 * */
 	public void creaListaRecensioni(JPanel recensioni, JButton approva, JButton disapprova) {
 		String[] names = { "id", "testo", "approvata" };
 		Object[][] mMatrix = funzioniModeratoreController.listaRecensioni();
@@ -85,11 +88,19 @@ public class funzioniModeratoreView {
 
 	}
 
+	/**
+	 * Method used to approve a specific review
+	 * 
+	 * @param btnApprova a JButton that when clicked approves the currently selected review
+	 * @param lblErroreRecensioni a JLabel used to display error to the user.
+	 * */
 	public void approvaRecensione(JButton btnApprova, JLabel lblErroreRecensioni) {
 		lblErroreRecensioni.setText("");
 		String idRecensione = (String) btnApprova.getClientProperty("id");
 		System.out.println(idRecensione);
+		
 		funzioniModeratoreController.approvaRecensione(idRecensione);
+		
 		int riga = 0;
 		if(btnApprova.getClientProperty("riga") == null){
 			lblErroreRecensioni.setText("Errore - Seleziona una riga!");
@@ -101,6 +112,12 @@ public class funzioniModeratoreView {
 		
 	}
 
+	/**
+	 * Method used to disapprove a specific review
+	 * 
+	 * @param btnDisapprova a JButton that when clicked disapproves the currently selected review
+	 * @param lblErroreRecensioni a JLabel used to display error to the user.
+	 * */
 	public void disapprovaRecensione(JButton btnDisapprova, JLabel lblErroreRecensioni) {
 		lblErroreRecensioni.setText("");
 		String idRecensione = (String) btnDisapprova.getClientProperty("id");
@@ -117,6 +134,14 @@ public class funzioniModeratoreView {
 		
 	}
 
+	/**
+	 * Method used to modify the user's xp points. Only a moderator can use this method.
+	 * 
+	 * @param comboBox a JComboBox used to select if moderator wants to increase or decrease xp
+	 * @param xpField a JTextField used to insert how many xp points give/remove
+	 * @param btnAfferma a JButton that when clicked change the xp
+	 * @param lblErroreUtenti a JLabel used to display error to the user.
+	 * */
 	public void modificaXPUtente(JComboBox comboBox, JTextField xpField, JButton btnAfferma, JLabel lblErroreUtenti) throws NumberFormatException{
 		int newXP = 0, riga = 0;
 		lblErroreUtenti.setText("");
@@ -151,14 +176,20 @@ public class funzioniModeratoreView {
 
 		System.out.println(op);
 
-		// Controllo su livello.
+		// Level check.
 		int newLevel = (int) newXP / 100;
 		if (newLevel != exLevel) {
 			tableUtentiModel.setValueAt(newLevel, riga, 3);
 		}
-		// funzioniModeratoreController.modificaXPUtente(op, id);
+		
+		funzioniModeratoreController.modificaXPUtente(op, id);
 	}
 
+	/**
+	 * Method used to check if the text contains only numerics
+	 * 
+	 * @param xpField a JTextField with user's data.
+	 *  */
 	private boolean controllaTesto(JTextField xpField) {
 		Pattern pattern;
 		Matcher matcher;
@@ -172,11 +203,18 @@ public class funzioniModeratoreView {
 		return true;
 	}
 
+	/**
+	 * Method used to create the list of the system's users.
+	 * This list is inserted into a JTable object which is in turn inserted into a JScrollPane 
+	 * 
+	 * @param cambioLivello a JPanel where the JScrollPane will appear
+	 * @param btnAfferma a JButton used to fires the event.
+	 * */
 	public void creaListaUtenti(JPanel cambioLivello, JButton btnAfferma) {
 		// TODO Auto-generated method stub
 
 		String[] names = { "Id", "Username", "XP", "Livello" };
-		Object[][] mMatrix = funzioniModeratoreController.listaUtenti();
+		Object[][] mMatrix = funzioniModeratoreController.listaUtenti(loginController.mObject.getID());
 
 		tableUtentiModel = new DefaultTableModel(mMatrix, names) {
 			@Override
@@ -213,6 +251,11 @@ public class funzioniModeratoreView {
 		});
 	}
 
+	/**
+	 * Method used to close the frame.
+	 * 
+	 * @param fMP the frame that has to be closed.
+	 * */
 	public void tornaDietro(funzioniModeratorePage fMP) {
 		// TODO Auto-generated method stub
 		fMP.setVisible(false);

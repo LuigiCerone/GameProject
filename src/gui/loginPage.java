@@ -1,31 +1,21 @@
-/*
- * @author Cerone Luigi
- * @version 1.0
- * */
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import controller.loginController;
-import database.Dbms;
-import model.Utente;
-import view.loginView;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-import java.awt.Font;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import view.loginView;
 
 public class loginPage extends JFrame {
 
@@ -52,13 +42,14 @@ public class loginPage extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Frame constructor.
 	 */
 	public loginPage() {
 		loginPage lP = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 550, 350);
 		this.setResizable(false);
+		setTitle("Login");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -107,6 +98,9 @@ public class loginPage extends JFrame {
 		labelErrore.setBounds(206, 142, 246, 14);
 		contentPane.add(labelErrore);
 		
+		// Listen for Enter key press to log in.
+		lP.getRootPane().setDefaultButton(btnAccedi);
+		
 		btnAccedi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new loginView().accedi(textField.getText(), new String(passwordField.getPassword()), labelErrore,lP);
@@ -119,6 +113,5 @@ public class loginPage extends JFrame {
 			}
 		});
 	}
-	
-	
+
 }

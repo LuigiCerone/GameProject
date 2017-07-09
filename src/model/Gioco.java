@@ -23,7 +23,7 @@ public class Gioco {
 	  * 
 	  * @param id game's id
 	  * @param nome game's name
-	  * @param game's XP value
+	  * @param valoreXP game's XP value
 	  * */
 	 
 	public Gioco(int id, String nome, int valoreXP) {

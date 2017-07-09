@@ -1,18 +1,8 @@
-/*
- * @author Cerone Luigi
- * @version 1.0
- * */
-
 package gui;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.regex.Matcher;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -25,8 +15,6 @@ import javax.swing.SwingConstants;
 import controller.loginController;
 import view.registrazioneView;
 
-import java.util.regex.Pattern;
-
 public class registrazionePage extends JFrame {
 	private JTextField textNome;
 	private JTextField textCognome;
@@ -35,7 +23,7 @@ public class registrazionePage extends JFrame {
 	private JPasswordField passwordFieldRepeat;
 
 	/**
-	 * Create the frame.
+	 * Frame constructor.
 	 */
 	public registrazionePage() {
 		registrazionePage rP = this;

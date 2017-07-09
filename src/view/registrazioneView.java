@@ -1,8 +1,3 @@
-/*
- * @author Cerone Luigi
- * @version 1.0
- * */
-
 package view;
 
 import java.awt.Color;
@@ -14,15 +9,28 @@ import java.util.regex.Pattern;
 
 import javax.swing.JLabel;
 
-import gui.registrazionePage;
-import controller.registrazioneController;;
+import controller.registrazioneController;
+import gui.registrazionePage;;
 
 public class registrazioneView {
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + 
 			"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	
+	/**
+	 * Method used to confirm the user registration.
+	 * 
+	 * @param n user's first name
+	 * @param c user's last name
+	 * @param u user's username
+	 * @param e user's email
+	 * @param p user's password
+	 * @param p1 user's password
+	 * @param rP registration frame
+	 * @param lbl a JLabel used to display error.
+	 * 
+	 * */
 	public boolean confermaRegistrazione(String n, String c, String u, String e, String p, String p1, registrazionePage rP, JLabel lbl){
-		
+		lbl.setText("");
 		//Controllo pattern email
 		TreeMap<String,Boolean> mMap = new TreeMap<String,Boolean>();
 		mMap.put("Nome",true);
@@ -43,15 +51,11 @@ public class registrazioneView {
 			mMap.put("Password", false);
 		if(p1.length() <= 0 || p1.length() > 15)
 			mMap.put("Password", false);
-		
-		// Controllare presenza di caratteri speciali nei campi.
-		
+			
 		Pattern pattern;
 		Matcher matcher;
-		
 		pattern = Pattern.compile(EMAIL_PATTERN);
 		matcher = pattern.matcher(e); 
-		
 		if(!(matcher.matches())){
 			mMap.put("Email", false);
 		}
@@ -70,12 +74,18 @@ public class registrazioneView {
 			lbl.setText("<html>Errore! Username ed email già <br> occupati!</html>");
 		}
 		
-		// Se sono arrivato qui tutti i dati sono ok. Quindi posso inserire nel DB.
+		// If I'm here everything is fine.
 		registrazioneController.inserisciNuovoUtente(n,c,u,e,p);
 		
 		return true;
 	}
 
+	/**
+	 * Method used to update the GUI if any error occurs.
+	 * 
+	 * @param mMap a TreeMap that associate to every field a checking boolean
+	 * @param rP a registration frame.
+	 *  */
 	private void aggiornaErrori(TreeMap<String, Boolean> mMap, registrazionePage rP) {
 		for(Map.Entry<String, Boolean> entry : mMap.entrySet()){
 			String toUpdate = "";
@@ -93,6 +103,14 @@ public class registrazioneView {
 		} // end-for.
 	}
 
+	
+	/**
+	 * Method used to color a field
+	 * 
+	 * @param string name of the field
+	 * @param rP registration frame
+	 * @param c a color.
+	 * */
 	private void colora(String string, registrazionePage rP, Color c) {
 		// TODO Auto-generated method stub.
 		Component[] components = rP.getContentPane().getComponents();
@@ -106,6 +124,13 @@ public class registrazioneView {
 		}
 	}
 	
+	/**
+	 * Method used to update the JLabel's data
+	 * 
+	 * @param mMap a TreeMap that associate to every field a checking boolean
+	 * @param rP a registration frame
+	 * @param lbl a JLabel used to display errors.
+	 * */
 	private boolean aggiornaLabel(TreeMap<String, Boolean> mMap, registrazionePage rP, JLabel lbl){
 		for(boolean b : mMap.values())
 			if(b == false) {

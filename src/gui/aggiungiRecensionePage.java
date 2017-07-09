@@ -1,23 +1,25 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
 import view.aggiungiRecensioneView;
-
-import javax.swing.JTextPane;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class aggiungiRecensionePage extends JFrame {
 	private JPanel contentPane;
 	private int idGioco;
 	
+	/**
+	 * Frame constructor.
+	 * 
+	 * @param idGioco the id of the game that the user is reviewing.
+	 * */
 	public aggiungiRecensionePage(int idGioco) {
 		aggiungiRecensionePage aRP = this;
 		this.idGioco = idGioco;
@@ -44,6 +46,7 @@ public class aggiungiRecensionePage extends JFrame {
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new aggiungiRecensioneView().aggiungi(textPane.getText(), idGioco);
+				new aggiungiRecensioneView().annulla(aRP);
 			}
 		});
 		
@@ -52,5 +55,7 @@ public class aggiungiRecensionePage extends JFrame {
 				new aggiungiRecensioneView().annulla(aRP);
 			}
 		});
+		
+		aRP.getRootPane().setDefaultButton(btnAggiungi);
 	}
 }

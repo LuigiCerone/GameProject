@@ -1,29 +1,25 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.EventQueue;
+import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.TreeMap;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import view.listaGiochiView;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import java.awt.Component;
-import javax.swing.Box;
-
-import java.util.HashMap;
 
 public class listaGiochiPage extends JFrame {
 
@@ -32,18 +28,19 @@ public class listaGiochiPage extends JFrame {
 	private JPanel recensioniGioco;
 	private JList list;
 	private int userID;
-	private JLabel lblVoto;
 	private JLabel lblNewLabel;
 	private JLabel lblVotoGioco;
 	private JSpinner spinner;
 	private JButton btnNuovoVoto;
 	private JLabel label;
-	private HashMap<String, Component> mMap = new HashMap<String, Component>();
+	private TreeMap<String, Component> mMap = new TreeMap<String, Component>();
 	private JPanel recensioniPanel;
 	private JLabel lblRecensioni;
 
 	/**
-	 * Create the frame.
+	 * Frame constructor.
+	 * 
+	 * @param userID the user's currently logged in that is navigating the games' list.
 	 */
 	public listaGiochiPage(int userID) {
 		listaGiochiPage lGP = this;
@@ -105,29 +102,13 @@ public class listaGiochiPage extends JFrame {
 		JPanel bottomPanel = new JPanel(new GridLayout(2,1));
 		bottomPanel.setName("bottomPanel");
 		recensioniGioco.add(bottomPanel);
-		mMap.put(bottomPanel.getName(), bottomPanel);
-		
-		lblVoto = new JLabel("Voto medio:");
-		lblVoto.setFont(new Font("Tahoma", Font.BOLD, 17));
-		lblVoto.setVerticalAlignment(SwingConstants.TOP);
-		lblVoto.setHorizontalAlignment(SwingConstants.CENTER);
-		lblVoto.setName("lblVoto");
-		bottomPanel.add(lblVoto);
-		mMap.put(lblVoto.getName(), lblVoto);
+		mMap.put(bottomPanel.getName(), bottomPanel);		
 		
 		contentPane.add(BorderLayout.EAST, topPanel);
 		
-		//infoGioco.add(button);
-		lblVotoGioco= new JLabel("");
-		lblVotoGioco.setHorizontalAlignment(SwingConstants.LEFT);
-		bottomPanel.add(lblVotoGioco);
-		lblVotoGioco.setName("lblVotoGioco");
-		mMap.put(lblVotoGioco.getName(), lblVotoGioco);
-		
-		
-		lblNewLabel = new JLabel("Nuovo voto:");
+		lblNewLabel = new JLabel("    Nuovo voto:");
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 17));
 		lblNewLabel.setName("lblNewLabel");
 		bottomPanel.add(lblNewLabel);
@@ -180,12 +161,11 @@ public class listaGiochiPage extends JFrame {
 		mMap.put("aggiungiRecButton", aggiungiRecButton);
 		nuovoVoto.add(aggiungiRecButton);
 		
-		// lista giochi.
-		new listaGiochiView().creaLista1(lGP, mMap);
+		new listaGiochiView().creaLista(lGP, mMap);
 		
 		buttonGioca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// L'utente vuole giocare ad un particolare gioco.
+				// User wants to play.
 				new listaGiochiView().aggiungiXPUtente(userID, buttonGioca);
 			}
 		});
