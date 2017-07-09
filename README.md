@@ -29,8 +29,8 @@ Then
 <li>Launch the app either with <code>java -jar src/GamingPlatform.jar</code> or via GUI</ol>
 
 <h3>Contacts</h3>
-luigiceroneaq@gmail.com
-taglieri96@gmail.com
-danilorosati96@gmail.com
+luigiceroneaq@gmail.com <br>
+taglieri96@gmail.com <br>
+danilorosati96@gmail.com <br>
 
 
