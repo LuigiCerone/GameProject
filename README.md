@@ -19,8 +19,8 @@
 
 <h3>Installation</h3>
 In order to run the project a user in the MySQL database is required with 
-`CREATE USER 'gaming'@'localhost' IDENTIFIED BY 'gaming';`
-`GRANT ALL PRIVILEGES ON * . * TO 'gaming'@'localhost';`
+<code>CREATE USER 'gaming'@'localhost' IDENTIFIED BY 'gaming';</code>
+<code>GRANT ALL PRIVILEGES ON * . * TO 'gaming'@'localhost';</code>
 Then
 <ol>
 <li>Clone this repo <code>git clone https://github.com/LuigiCerone/GameProject.git</code></li>
