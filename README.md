@@ -18,7 +18,7 @@
 
 
 <h3>Installation</h3>
-In order to run the project a user in the MySQL database is required with: <br>
+In order to run the project create a user in the MySQL database with: <br>
 <code>CREATE USER 'gaming'@'localhost' IDENTIFIED BY 'gaming';</code> <br>
 <code>GRANT ALL PRIVILEGES ON * . * TO 'gaming'@'localhost';</code> <br>
 Then: <br>
