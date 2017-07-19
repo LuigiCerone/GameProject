@@ -25,7 +25,7 @@ Then: <br>
 <ol>
 <li>Clone this repo <code>git clone https://github.com/LuigiCerone/GameProject.git</code></li>
 <li><code>cd</code> into the folder cloned</li>
-<li><code>mysql -u gaming -p src/gaming.sql</code></li>
+<li><code>mysql -u gaming -p < src/gaming.sql</code></li>
 <li>Launch the app either with <code>java -jar src/GamingPlatform.jar</code> or by using GUI</ol>
 
 <h3>Contacts</h3>
